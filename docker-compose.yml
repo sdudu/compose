@@ -23,7 +23,7 @@ services:
     # build: ./CarpetBackend/
     image: sdudu/carpet-service:1.0
     ports:
-      - '8080:8000' # expose ports - HOST:CONTAINER
+      - '80:8000' # expose ports - HOST:CONTAINER
     environment:
       - LOG_PATH=/var/log
       - APP_NAME=carpet-service
