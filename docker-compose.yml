@@ -5,6 +5,8 @@ services:
   postgres:
     container_name: postgres
     image: postgres:10.4-alpine
+    volumes:
+      - ~/data/postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=xxx
       - POSTGRES_PASSWORD=xxx
@@ -44,7 +46,7 @@ services:
   #   container_name: carpet-webapp
   #   build: ./CarpetWebApp/
   #   ports:
-  #     - '3080:3000' # expose ports - HOST:CONTAINER
+  #     - '80:5000' # expose ports - HOST:CONTAINER
   #   environment:
   #     - REACT_APP_DUDU=dudu
   #     - NODE_ENV=${NODE_ENV}
