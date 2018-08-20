@@ -18,9 +18,9 @@ services:
   carpet-service:
     container_name: carpet-service
     # build: ./CarpetBackend/
-    image: sdudu/carpet-service:1.0.8
+    image: sdudu/carpet-service:1.0.9
     ports:
-      - '80:8000' # expose ports - HOST:CONTAINER
+      - '8080:8000' # expose ports - HOST:CONTAINER
     environment:
       - LOG_PATH=/var/log
       - APP_NAME=carpet-service
