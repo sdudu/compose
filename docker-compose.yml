@@ -11,19 +11,14 @@ services:
       - POSTGRES_USER=xxx
       - POSTGRES_PASSWORD=xxx
       - POSTGRES_DB=product_carpet-dev
-    # build: ./services/users/src/db
-    ports: # Postgres will be available on port 5433 on the host machine and on port 5432 for other services.
+    
+    ports: 
       - '5433:5432' # expose ports - HOST:CONTAINER
     
-    # NOTE: Use expose, rather than ports, if you just want Postgres available 
-    # to other services but not the host machine:
-    # expose:
-      #- "5432"
-
   carpet-service:
     container_name: carpet-service
     # build: ./CarpetBackend/
-    image: sdudu/carpet-service:1.0
+    image: sdudu/carpet-service:1.0.8
     ports:
       - '80:8000' # expose ports - HOST:CONTAINER
     environment:
@@ -40,19 +35,19 @@ services:
     links:
       - postgres
     command: [ "npm", "run", "start"]
-    # command: dockerize -wait tcp://postgres:5432 -timeout 300s dumb-init npm run start
-#"./wait-for-postgres.sh", "postgres:5432", "--",
-  # carpet-webapp:
-  #   container_name: carpet-webapp
-  #   build: ./CarpetWebApp/
-  #   ports:
-  #     - '80:5000' # expose ports - HOST:CONTAINER
-  #   environment:
-  #     - REACT_APP_DUDU=dudu
-  #     - NODE_ENV=${NODE_ENV}
-  #     - REACT_APP_BASE_URL=carpet-service
-  #   depends_on:
-  #     carpet-service:
-  #       condition: service_started
-  #   links:
-  #     - carpet-service
+
+  carpet-webapp:
+    container_name: carpet-webapp
+    # build: ./CarpetWebApp/
+    image: sdudu/carpet-webapp:1.0.9
+    ports:
+      - '80:5000'
+    environment:
+      - REACT_APP_DUDU=dudu
+      - NODE_ENV=${NODE_ENV}
+      - REACT_APP_BASE_URL=carpet-service
+    depends_on:
+      carpet-service:
+        condition: service_started
+    links:
+      - carpet-service
